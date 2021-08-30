@@ -1,0 +1,15 @@
+<% include ./partials/header.ejs %>
+
+<style>
+    span{
+        color: blue;
+    }
+</style>
+
+<div class="Container jumbotron mt-5">
+    <h2> Welcome to your Profile</h2><br>
+    <h1>Hello, <span> <%= user.name %></span></h1>
+    <h4>Your Registered Email Address is <span> <%= user.email %></span> <a href="/updateProfile/<%=user._id%>">🖊</a> </h4>
+</div>
+
+<% include ./partials/footer.ejs %>
