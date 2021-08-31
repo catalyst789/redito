@@ -13,7 +13,8 @@ passport.use(new localStrategy(User.authenticate()));
 
 /* GET Login page. */
 router.get('/', sendToProfile, function(req, res, next) {
-  res.render('Login', {isLoggedIn: !!req.user});
+  const errors = req.flash().error || [];
+  res.render('Login', {errors, isLoggedIn: !!req.user});
 });
 
 /* GET Register page. */
@@ -64,6 +65,7 @@ router.post('/register', function(req, res, next) {
 /* POST Login. */
 router.post('/login',passport.authenticate('local', {
   successRedirect:'/profile',
+  failureFlash:true,
   failureRedirect:'/'
 }), function(req, res, next){});
 

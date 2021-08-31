@@ -1,5 +1,8 @@
 <% include ./partials/header.ejs %>
 
+<% errors.forEach(error => {  %>
+   <li  class="ml-5 mt-5 text-danger" > <%= error %> </li>
+<%  }) %>
 
 <form action="/login" method="POST" class="container mt-5 pt-5">
     <h2>Login here</h2>

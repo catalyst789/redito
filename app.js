@@ -5,13 +5,14 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const passport = require('passport');
 const expressSession = require('express-session');
+const flash=require("connect-flash");
 
 const indexRouter = require('./routes/index');
 const User = require('./model/userSchma');
 const app = express();
-
 //database config
 require('./model/config');
+app.use(flash());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
