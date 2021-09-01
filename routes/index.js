@@ -5,6 +5,8 @@ const User = require('../model/userSchma');
 const passport = require('passport');
 const localStrategy = require('passport-local');
 
+const upload = require('./multimedia');
+
 passport.use(new localStrategy(User.authenticate()));
 
 // GET ROUTES
@@ -26,6 +28,7 @@ router.get('/register',sendToProfile, function(req, res, next) {
 router.get('/profile', isLoggedIn, function(req, res, next) {
   User.findOne({username:req.user.username})
     .then( user => {
+      console.log(user);
       res.render('Profile',  {user, isLoggedIn: !!req.user});
     }).catch( err => console.log(err));
 });
@@ -81,6 +84,17 @@ router.post('/update/:id', isLoggedIn, function(req, res, next){
     }).catch( err => res.send(err));
 })
 
+/* POST Upload Profile Picture. */
+router.post('/uploadprofilepic', isLoggedIn,upload.single('avatar'), function(req, res, next){
+  var addressOfImage = '/images/uploads/' + req.file.filename
+  User.findOne({username:req.user.username})
+    .then( user => {
+        user.avatar = addressOfImage;
+        user.save().then( savedUser => {
+            res.redirect('/profile');
+        })
+    }).catch( err => res.send(err));
+})
 
 //isLoggedInMiddelware
 function isLoggedIn(req, res, next){

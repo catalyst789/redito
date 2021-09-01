@@ -12,6 +12,7 @@ const User = require('./model/userSchma');
 const app = express();
 //database config
 require('./model/config');
+
 app.use(flash());
 
 // view engine setup
